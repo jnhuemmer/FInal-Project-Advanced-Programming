@@ -9,21 +9,19 @@ import java.util.List;
 
 public class DataEntry 
 {
-	final private String Data;
+	private final String key;
+	private final String data;
 	
-	public DataEntry(String Data)
+	public DataEntry(String key, String data)
 	{
-		this.Data = Data;
+		this.key = key;
+		this.data = data;
 	}
 	
-	public static List<DataEntry> readFastaFile(String filepath) throws Exception
+	public static List<DataEntry> readDataTable(String filepath) throws Exception
 	{
 		BufferedReader fileContent = new BufferedReader(new FileReader(new File(filepath)));
-		List<DataEntry> DataList = new ArrayList<DataEntry>();
-		
-		// StringBuffers used to avoid creating a bunch of string objects
-		StringBuffer tempHeader = new StringBuffer();
-		StringBuffer tempSeq = new StringBuffer();
+		List<DataEntry> dataList = new ArrayList<DataEntry>();
 		
 		// Reads through whole file
         for (String nextLine = fileContent.readLine(); nextLine != null; nextLine = fileContent.readLine())
@@ -35,27 +33,22 @@ public class DataEntry
         	}
         	
         	// If line is a header
-        	else if (nextLine.charAt(0) == '>')
-        	{
-        		DataList.add(new DataEntry(tempHeader.toString().substring(1), tempSeq.toString));
-        		tempHeader.setLength(0);
-        		tempSeq.setLength(0);
-        		tempHeader.append(nextLine);
-        	}
-        	
-        	// If line is a part of the coding sequence
         	else
         	{
-        		tempSeq.append(nextLine.replace("\n", ""));
+        		String keyEntry = nextLine.substring(0, nextLine.indexOf(','));
+        		dataList.add(new DataEntry(keyEntry, nextLine));
         	}
         }
-        FSList.add(new FastaSequence(tempHeader.toString(), tempSeq.toString()));  // Adds the last entry since it's missed by the loop
+        	
         fileContent.close();
-        return FSList;
+        return dataList;
 	}
 	public static void main(String[] args)
 	{
 		
 		System.out.println("Data entry class");
+		
+		DataEntry sigma = new DataEntry("RIZZLER" ,"KAI CENAT");
+		System.out.println(sigma);
 	}
 }
