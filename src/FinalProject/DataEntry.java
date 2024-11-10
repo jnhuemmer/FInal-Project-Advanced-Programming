@@ -11,17 +11,44 @@ public class DataEntry
 {
 	private final String key;
 	private final String data;
+	private final String header;
 	
-	public DataEntry(String key, String data)
+	public DataEntry(String key, String data, String header)
 	{
 		this.key = key;
 		this.data = data;
+		this.header = header;
 	}
 	
+	public String getData()
+	{
+		return this.data;
+	}
+	
+	public String getHeader()
+	{
+		return this.header;
+	}
+	
+	public String getKey()
+	{
+		return this.key;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "This is a data entry with a key value of " + this.getKey();
+	}
+	
+	// Loop through excel file and create data objects for each line
 	public static List<DataEntry> readDataTable(String filepath) throws Exception
 	{
 		BufferedReader fileContent = new BufferedReader(new FileReader(new File(filepath)));
 		List<DataEntry> dataList = new ArrayList<DataEntry>();
+		
+		// Get the header
+		String firstLine = fileContent.readLine();
 		
 		// Reads through whole file
         for (String nextLine = fileContent.readLine(); nextLine != null; nextLine = fileContent.readLine())
@@ -32,11 +59,11 @@ public class DataEntry
         		;
         	}
         	
-        	// If line is a header
         	else
         	{
+        		// First column has key for this table
         		String keyEntry = nextLine.substring(0, nextLine.indexOf(','));
-        		dataList.add(new DataEntry(keyEntry, nextLine));
+        		dataList.add(new DataEntry(keyEntry, nextLine.substring(nextLine.indexOf(',') + 1, nextLine.length()), firstLine));
         	}
         }
         	
@@ -48,7 +75,7 @@ public class DataEntry
 		
 		System.out.println("Data entry class");
 		
-		DataEntry sigma = new DataEntry("RIZZLER" ,"KAI CENAT");
-		System.out.println(sigma);
+		DataEntry DataEntryObject = new DataEntry("DataEntryKey" ,"DataEntryData", "DataEntryHeader");
+		System.out.println(DataEntryObject);
 	}
 }
