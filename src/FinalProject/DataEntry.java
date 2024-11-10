@@ -49,6 +49,8 @@ public class DataEntry
 		
 		// Get the header
 		String firstLine = fileContent.readLine();
+		System.out.println(firstLine);
+		
 		
 		// Reads through whole file
         for (String nextLine = fileContent.readLine(); nextLine != null; nextLine = fileContent.readLine())

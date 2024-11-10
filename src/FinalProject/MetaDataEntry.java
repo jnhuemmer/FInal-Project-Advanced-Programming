@@ -29,7 +29,7 @@ public class MetaDataEntry extends DataEntry
 		List<MetaDataEntry> dataList = new ArrayList<MetaDataEntry>();
 		
 		// Get the header
-		String firstLine = fileContent.readLine();
+		String firstLine = fileContent.readLine();		
 		
 		// Reads through whole file
         for (String nextLine = fileContent.readLine(); nextLine != null; nextLine = fileContent.readLine())

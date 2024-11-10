@@ -12,7 +12,7 @@ public class FinalProjectMain
 	public static void writeTable(HashMap<String, String> finalData, String header, File outputFile) throws Exception
 	{		
 		BufferedWriter writeOutput = new BufferedWriter(new FileWriter(outputFile));
-		writeOutput.write(header);
+		writeOutput.write(header + "\n");
 		
 		// Loop through each data entry
 		for (String key : finalData.keySet())
@@ -58,7 +58,7 @@ public class FinalProjectMain
 		// Add "age" to the second column
 		newHeader = newHeader.substring(0, newHeader.indexOf(',')) + ",age" + newHeader.substring(newHeader.indexOf(','), newHeader.length());
 		
-		//Remove "" from strings
+		// Remove "" from strings
 		newHeader = newHeader.replace("\"", "");
 		
 		// Output
